@@ -1,0 +1,37 @@
+import React from "react";
+
+const ColorPickerBox = ({ data, value, setValue, label }) => {
+  const isNamedColor = data && typeof data === "object" && value in data;
+  const hexValue = isNamedColor ? data[value] : value;
+
+  return (
+    <div className="mb-3">
+      <p>
+        {label}: {value}
+      </p>
+      <div className="d-flex align-items-center gap-3">
+        <select
+          name="color"
+          className="form-select"
+          value={isNamedColor ? value : ""}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          <option value="">Select a color</option>
+          {Object.keys(data).map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+        <input
+          type="color"
+          className="form-control form-control-color"
+          value={hexValue || "#0000FF"}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default ColorPickerBox;
