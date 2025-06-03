@@ -280,7 +280,9 @@ export const DynamicCTATemplateCard = ({
           }
           setActiveMenu("paragraph");
         }}
-        className={`${isHover ? "hover" : ""} ${paragraphOpacity} ${paragraphTextClass} ${paragraphExtraClass}`}
+        className={`${
+          isHover ? "hover" : ""
+        } ${paragraphOpacity} ${paragraphTextClass} ${paragraphExtraClass}`}
         style={paragraphTextStyle}
       >
         {reactHtmlParser(paragraphContent)}
@@ -330,12 +332,12 @@ export const DynamicCTATemplateCard = ({
 
     return (
       <div
-        // onClick={(e) => {
-        //   if (disablePropagation) {
-        //     e.stopPropagation();
-        //   }
-        //   setActiveMenu("button");
-        // }}
+        onClick={(e) => {
+          if (disablePropagation) {
+            e.stopPropagation();
+          }
+          setActiveMenu("button");
+        }}
         className={`d-flex gap-2 ${atBottom ? "" : "flex-grow-1"} flex-wrap ${
           button.length == 1
             ? button[0].position === "center"

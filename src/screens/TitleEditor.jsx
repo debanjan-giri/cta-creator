@@ -1,10 +1,63 @@
 import { useEffect, useRef, useState } from "react";
-import InputBox from "../components/InputBox";
-import DropdownBox from "../components/DropdownBox";
-import ColorPickerBox from "../components/ColorPickerBox";
-import { TitleOptions } from "../constants/CtaOptions";
-import { PositionSelector } from "../components/PositionBox";
 import { MdOpacity } from "react-icons/md";
+import { RenderComponent } from "../components/RenderComponent";
+
+const TitleEditorSchema = [
+  {
+    label: "Title",
+    placeholder: "Set Title",
+    isTextarea: true,
+    valueKey: "content",
+    component: "InputBox",
+  },
+  {
+    label: "Heading Variation",
+    data: ["h1", "h2", "h3", "h4", "h5", "h6", "sub_header"],
+    valueKey: "variation",
+    component: "DropdownBox",
+  },
+  {
+    label: "Text Opacity",
+    data: [
+      { key: "25", label: "25%", icon: MdOpacity },
+      { key: "50", label: "50%", icon: MdOpacity },
+      { key: "75", label: "75%", icon: MdOpacity },
+      { key: "100", label: "100%", icon: MdOpacity },
+    ],
+    valueKey: "opacity",
+    component: "Selector",
+  },
+  {
+    label: "Color",
+    data: {
+      primary: "#0000FF",
+      secondary: "#FF0000",
+      dark: "#000000",
+      light: "#FFFFFF",
+    },
+    valueKey: "color",
+    component: "ColorPickerBox",
+  },
+  {
+    label: "Start Endorment",
+    placeholder: "Submit Svg",
+    valueKey: "startEndorment",
+    component: "InputBox",
+  },
+  {
+    label: "End Endorment",
+    placeholder: "Submit Svg",
+    valueKey: "endEndorment",
+    component: "InputBox",
+  },
+  {
+    label: "Custom Css",
+    placeholder: "Bootstrap Class",
+    isTextarea: true,
+    valueKey: "extraClass",
+    component: "InputBox",
+  },
+];
 
 const TitleEditor = ({ onChange, changedData, modalComponent }) => {
   const [state, setState] = useState({
@@ -59,87 +112,18 @@ const TitleEditor = ({ onChange, changedData, modalComponent }) => {
 
   return (
     <div className="p-3 bg-white rounded shadow-sm ">
-      <div className="mb-3">
-        <InputBox
-          isTextarea={true}
-          label="Title"
-          value={state.content}
-          setValue={(val) => handleStateChange("content", val)}
-          placeholder="Set Title"
-        />
-      </div>
-
-      <div className="mb-3">
-        <DropdownBox
-          label="Heading Variation"
-          value={state.variation}
-          setValue={(val) => handleStateChange("variation", val)}
-          data={TitleOptions?.variation}
-          disabled={isDisabled}
-        />
-      </div>
-
-      <div className="mb-3">
-        <PositionSelector
-          label={"Text Opacity"}
-          data={[
-            { key: "25", label: "25%", icon: MdOpacity },
-            { key: "50", label: "50%", icon: MdOpacity },
-            { key: "75", label: "75%", icon: MdOpacity },
-            { key: "100", label: "100%", icon: MdOpacity },
-          ]}
-          value={state.opacity}
-          onSelect={(val) => handleStateChange("opacity", val)}
-        />
-      </div>
-
-      <div className="mb-3">
-        <ColorPickerBox
-          label="Color"
-          data={{
-            primary: "#0000FF",
-            secondary: "#FF0000",
-            dark: "#000000",
-            light: "#FFFFFF",
-          }}
-          disabled={isDisabled}
-          value={state.color}
-          setValue={(val) => handleStateChange("color", val)}
-        />
-      </div>
-
-      <div className="mb-3">
-        <InputBox
-          label="Start Endorment"
-          placeholder="Submit Svg"
-          value={state.startEndorment}
-          disabled={isDisabled}
-          setValue={(val) => handleStateChange("startEndorment", val)}
-        />
-      </div>
-
-      <div className="mb-3">
-        <InputBox
-          label="End Endorment"
-          placeholder="Submit Svg"
-          value={state.endEndorment}
-          disabled={isDisabled}
-          setValue={(val) => handleStateChange("endEndorment", val)}
-        />
-      </div>
-
-      <div className="mb-3">
-        <InputBox
-          label="Custom Css"
-          isTextarea={true}
-          placeholder="Bootstrap Class"
-          value={state.extraClass}
-          disabled={isDisabled}
-          setValue={(val) => handleStateChange("extraClass", val)}
-        />
-      </div>
-
-      {/* Modal container */}
+      {TitleEditorSchema?.map((item, idx) => {
+        return (
+          <div key={idx} className="mb-3">
+            <RenderComponent
+              isDisabled={isDisabled}
+              item={item}
+              state={state}
+              onChange={handleStateChange}
+            />
+          </div>
+        );
+      })}
       <div
         className="transition-opacity"
         style={{
@@ -152,4 +136,5 @@ const TitleEditor = ({ onChange, changedData, modalComponent }) => {
     </div>
   );
 };
+
 export default TitleEditor;
