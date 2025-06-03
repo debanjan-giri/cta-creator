@@ -13,7 +13,7 @@ const ColorPickerBox = ({ data, value, setValue, label, disabled = false }) => {
           className="form-select"
           value={isNamedColor ? value : ""}
           onChange={(e) => setValue(e.target.value)}
-          disabled={disabled} // ⛔ disable dropdown
+          disabled={disabled}
         >
           <option value="">Select a color</option>
           {Object.keys(data).map((item, index) => (
@@ -27,7 +27,7 @@ const ColorPickerBox = ({ data, value, setValue, label, disabled = false }) => {
           className="form-control form-control-color"
           value={hexValue || "#0000FF"}
           onChange={(e) => setValue(e.target.value)}
-          disabled={disabled} // ⛔ disable color input
+          disabled={disabled}
         />
       </div>
     </div>

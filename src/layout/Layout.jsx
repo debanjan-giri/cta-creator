@@ -102,7 +102,7 @@ const Layout = () => {
       <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
         <div className="navbar-brand text-muted fw-bold fs-5 d-flex align-items-center">
           <Braces className="me-2" />
-          Dynamic CTA creator
+          Dynamic CTA Creator
         </div>
 
         {/* Mobile hamburger menu */}
