@@ -24,6 +24,7 @@ import FormQuestionModal from "./FormQuestionModal";
 import parse from "html-react-parser";
 import "../css/global.css";
 import { Fade } from "react-bootstrap";
+import { utils } from "../utils/cssExtractor";
 
 export const DynamicCTATemplateCard = ({
   setActiveMenu,
@@ -214,17 +215,25 @@ export const DynamicCTATemplateCard = ({
           }
           setActiveMenu("tag");
         }}
-        className={`d-flex ${isHover ? "hover" : ""} ${
-          tagPosition === "center"
-            ? "justify-content-center"
-            : tagPosition === "right"
-            ? "justify-content-end"
-            : "justify-content-start"
-        }`}
+        className={`${isHover ? "hover" : ""} `}
+        style={utils(
+          `d-flex ${
+            tagPosition === "center"
+              ? "justify-content-center"
+              : tagPosition === "right"
+              ? "justify-content-end"
+              : "justify-content-start"
+          }`
+        )}
       >
         <div
-          className={`tag ${tagBgClass} ${tagTextClass} ${tagBorderRadius} ${tagBgOpacity} ${tagExtraClass}`}
-          style={{ ...tagBgStyle, ...tagTextStyle }}
+          style={{
+            ...utils(
+              `tag ${tagBgClass} ${tagTextClass} ${tagBorderRadius} ${tagBgOpacity} ${tagExtraClass}`
+            ),
+            ...tagBgStyle,
+            ...tagTextStyle,
+          }}
         >
           {reactHtmlParser(tagText)}
         </div>
@@ -242,24 +251,31 @@ export const DynamicCTATemplateCard = ({
           }
           setActiveMenu("title");
         }}
-        className={`${
-          isHover ? "hover" : ""
-        } ${titleOpacity} ${titleTextClass}`}
-        style={titleTextStyle}
+        style={{
+          ...utils(` ${titleOpacity} ${titleTextClass}`),
+          ...titleTextStyle,
+        }}
+        className={`${isHover ? "hover" : ""}`}
       >
-        <div className="endorsement-container d-flex align-items-center">
+        <div style={{ ...utils("d-flex align-items-center") }}>
           {startEndorment && (
-            <div className="endorsement me-2">
+            <div style={{ ...utils("me-2") }}>
               {reactHtmlParser(startEndorment)}
             </div>
           )}
           {React.createElement(
             TitleTag,
-            { className: `fw-bold ${titleExtraClass}` },
+            {
+              style: {
+                ...utils(`fw-bold ${titleExtraClass}`),
+              },
+            },
+
             reactHtmlParser(titleContent)
           )}
+
           {endEndorment && (
-            <div className="endorsement ms-2">
+            <div style={{ ...utils("ms-2") }}>
               {reactHtmlParser(endEndorment)}
             </div>
           )}
@@ -280,10 +296,13 @@ export const DynamicCTATemplateCard = ({
           }
           setActiveMenu("paragraph");
         }}
-        className={`${
-          isHover ? "hover" : ""
-        } ${paragraphOpacity} ${paragraphTextClass} ${paragraphExtraClass}`}
-        style={paragraphTextStyle}
+        style={{
+          ...utils(
+            `${paragraphOpacity} ${paragraphTextClass} ${paragraphExtraClass}`
+          ),
+          ...paragraphTextStyle,
+        }}
+        className={`${isHover ? "hover" : ""}`}
       >
         {reactHtmlParser(paragraphContent)}
       </p>
@@ -300,21 +319,31 @@ export const DynamicCTATemplateCard = ({
     };
 
     return (
-      <div className="w-100 h-100 bg-dark bg-opacity-75 rounded d-flex flex-column align-items-center justify-content-center position-absolute top-0 start-0 z-1">
-        <div className="bg-white p-4 rounded-4">
+      <div
+        style={{
+          ...utils(
+            "w-100 h-100 bg-dark bg-opacity-75 rounded d-flex flex-column align-items-center justify-content-center position-absolute top-0 start-0 z-1"
+          ),
+        }}
+      >
+        <div style={{ ...utils("bg-white p-4 rounded-4") }}>
           <Fade>
             <div
-              className="ctaCardV5Overlay rounded"
+              style={{ ...utils("rounded") }}
               onClick={() => setShowConsentModal(false)}
             ></div>
           </Fade>
-          <div className="ctaConsentBox rounded text-center">
+          <div style={{ ...utils("rounded text-center") }}>
             <Fade>
-              <p className="fs-5 text-black fw-normal consentText">
+              <p style={{ ...utils("fs-5 text-black fw-normal") }}>
                 {showConsentDetails.consent_statement}
               </p>
               <button
-                className="fs-4 bg-primary text-white fw-medium rounded text-center py-2 px-3 mt-3 ctaLink"
+                style={{
+                  ...utils(
+                    "fs-4 bg-primary text-white fw-medium rounded text-center py-2 px-3 mt-3 ctaLink"
+                  ),
+                }}
                 onClick={onClickFn}
               >
                 I agree
@@ -338,15 +367,19 @@ export const DynamicCTATemplateCard = ({
           }
           setActiveMenu("button");
         }}
-        className={`d-flex gap-2 ${atBottom ? "" : "flex-grow-1"} flex-wrap ${
-          button.length == 1
-            ? button[0].position === "center"
-              ? "justify-content-center"
-              : button[0].position === "right"
-              ? "justify-content-end"
-              : ""
-            : ""
-        }`}
+        style={{
+          ...utils(
+            `d-flex gap-2 ${atBottom ? "" : "flex-grow-1"} flex-wrap ${
+              button.length == 1
+                ? button[0].position === "center"
+                  ? "justify-content-center"
+                  : button[0].position === "right"
+                  ? "justify-content-end"
+                  : ""
+                : ""
+            }`
+          ),
+        }}
       >
         {button.map((btn, index) => {
           const buttonWidthClass = btn.size?.startsWith("w-") ? btn.size : "";
@@ -370,14 +403,17 @@ export const DynamicCTATemplateCard = ({
           return (
             <div
               key={index}
-              className={`${
-                isHover ? "hover pe-4" : ""
-              } endorsement-container d-flex align-items-center ${buttonWraper}`}
+              style={{
+                ...utils(` d-flex align-items-center ${buttonWraper}`),
+              }}
+              className={`${isHover ? "hover pe-4" : ""}`}
             >
               <button
                 type="button"
-                className={`btn ${buttonClass} flex-shrink-0`}
-                style={buttonStyle}
+                style={{
+                  ...utils(`btn ${buttonClass} flex-shrink-0`),
+                  ...buttonStyle,
+                }}
                 // onClick={() => btn.url && window.open(btn.url, '_blank')}
 
                 onClick={() => {
@@ -403,15 +439,21 @@ export const DynamicCTATemplateCard = ({
                   }
                 }}
               >
-                <div className="d-flex align-items-center justify-content-center text-nowrap">
+                <div
+                  style={{
+                    ...utils(
+                      "d-flex align-items-center justify-content-center text-nowrap"
+                    ),
+                  }}
+                >
                   {btn.startEndorment && (
-                    <div className="endorsement me-2">
+                    <div style={{ ...utils("me-2") }}>
                       {reactHtmlParser(btn.startEndorment)}
                     </div>
                   )}
                   {reactHtmlParser(btn.content)}
                   {btn.endEndorment && (
-                    <div className="endorsement ms-2">
+                    <div style={{ ...utils("ms-2") }}>
                       {reactHtmlParser(btn.endEndorment)}
                     </div>
                   )}
@@ -488,8 +530,8 @@ export const DynamicCTATemplateCard = ({
     extraClass,
     position
   ) => (
-    <div className={`d-flex ${flexDirection}`}>
-      <div className={`d-flex flex-shrink-0 `}>
+    <div style={{ ...utils(`d-flex ${flexDirection}`) }}>
+      <div style={{ ...utils(`d-flex flex-shrink-0 `) }}>
         {/* ${position !== 'left' ? 'w-100' : ''}  */}
         <img
           onClick={(e) => {
@@ -500,18 +542,19 @@ export const DynamicCTATemplateCard = ({
           }}
           src={url}
           alt={alt}
-          className={`${isHover ? "hover" : ""} object-fit-cover ${extraClass}`}
           // ${position !== 'left' ? 'w-100' : ''}
           style={{
+            ...utils(`object-fit-cover ${extraClass}`),
             aspectRatio: position === "left" ? "4/3" : "16/9",
             width: size || "75px",
             minHeight: position === "left" ? "100%" : null,
           }}
+          className={`${isHover ? "hover" : ""}`}
         />
       </div>
-      <div className="flex-grow-1 align-items-center d-flex">
+      <div style={{ ...utils(`flex-grow-1 align-items-center d-flex`) }}>
         {renderTag()}
-        <div className="px-3 py-2">
+        <div style={{ ...utils("px-3 py-2") }}>
           {renderTitle()}
           {renderParagraph()}
           {renderButtons()}
@@ -522,13 +565,17 @@ export const DynamicCTATemplateCard = ({
 
   // Top left/right layout
   const renderTopLeftRightLayout = (isTopLeft, url, size, alt, extraClass) => (
-    <div className="position-relative">
+    <div style={{ ...utils("position-relative") }}>
       {renderTag()}
-      <div className="p-3">
+      <div style={{ ...utils("p-3") }}>
         <div
-          className={`d-flex justify-content-between align-items-center gap-3 ${
-            isTopLeft ? "" : "flex-row-reverse"
-          }`}
+          style={{
+            ...utils(
+              `d-flex justify-content-between align-items-center gap-3 ${
+                isTopLeft ? "" : "flex-row-reverse"
+              }`
+            ),
+          }}
         >
           <img
             onClick={(e) => {
@@ -539,12 +586,11 @@ export const DynamicCTATemplateCard = ({
             }}
             src={url}
             alt={alt}
-            className={`${
-              isHover ? "hover" : ""
-            } d-flex flex-shrink-0  w-auto mw-25 ${extraClass}`}
             style={{
+              ...utils(`d-flex flex-shrink-0  w-auto mw-25 ${extraClass}`),
               height: size || "36px",
             }}
+            className={`${isHover ? "hover" : ""}`}
           />
           {renderTitle()}
         </div>
@@ -562,21 +608,29 @@ export const DynamicCTATemplateCard = ({
     alt,
     extraClass
   ) => (
-    <div className="position-relative">
+    <div style={{ ...utils("position-relative") }}>
       {renderTag()}
-      <div className="p-3 pt-0 pb-0">
+      <div style={{ ...utils("p-3 pt-0 pb-0") }}>
         {renderTitle()}
         {renderParagraph()}
       </div>
       <div
-        className={`d-flex p-3 pt-2 justify-content-between align-items-center gap-3 ${
-          isBottomLeft ? "" : "flex-row-reverse"
-        }`}
+        style={{
+          ...utils(
+            `d-flex p-3 pt-2 justify-content-between align-items-center gap-3 ${
+              isBottomLeft ? "" : "flex-row-reverse"
+            }`
+          ),
+        }}
       >
         <div
-          className={`d-flex ${
-            isBottomLeft ? "justify-content-start" : "justify-content-end"
-          }`}
+          style={{
+            ...utils(
+              `d-flex ${
+                isBottomLeft ? "justify-content-start" : "justify-content-end"
+              }`
+            ),
+          }}
         >
           <img
             onClick={(e) => {
@@ -587,12 +641,11 @@ export const DynamicCTATemplateCard = ({
             }}
             src={url}
             alt={alt}
-            className={` ${
-              isHover ? "hover" : ""
-            } d-flex flex-shrink-0 w-auto mw-25 ${extraClass}`}
             style={{
+              ...utils(`d-flex flex-shrink-0 w-auto mw-25 ${extraClass}`),
               height: size || "36px",
             }}
+            className={`${isHover ? "hover" : ""}`}
           />
         </div>
         {renderButtons(true)}
@@ -602,21 +655,21 @@ export const DynamicCTATemplateCard = ({
 
   // Default layout when no image position is specified
   const renderDefaultLayout = () => (
-    <div className="position-relative">
+    <div style={{ ...utils("position-relative") }}>
       <div
-        className={`${
-          cardbgImage ? "position-relative" : ""
-        } ${cardbgopacity} ${border} 
-          ${borderColor} ${borderOpacity} ${borderWidth} ${cardExtraClass} ${cardTextClass} 
-           ${borderRadius}`}
         style={{
+          ...utils(`${
+            cardbgImage ? "position-relative" : ""
+          } ${cardbgopacity} ${border} 
+          ${borderColor} ${borderOpacity} ${borderWidth} ${cardExtraClass} ${cardTextClass} 
+           ${borderRadius}`),
           backgroundImage: cardbgImage,
           backgroundColor: cardBgStyle,
           ...cardTextStyle,
         }}
       >
         {renderTag()}
-        <div className="p-3 pt-0 pb-1">
+        <div style={{ ...utils("p-3 pt-0 pb-1") }}>
           {renderTitle()}
           {renderParagraph()}
         </div>
@@ -633,56 +686,34 @@ export const DynamicCTATemplateCard = ({
         }
         setActiveMenu("cardStyle");
       }}
-      className={`${
-        isHover ? "hover" : ""
-      } overflow-hidden mb-4 dynamic_Cta_Main position-relative ${
-        cardbgImage ? "position-relative" : ""
-      } 
-    ${border} ${borderColor} ${borderOpacity} ${borderWidth} 
-    ${cardExtraClass} ${cardTextClass}  ${borderRadius} ${cardBgClass}`}
       style={{
+        ...utils(`overflow-hidden mb-4 dynamic_Cta_Main position-relative ${
+          cardbgImage ? "position-relative" : ""
+        } 
+    ${border} ${borderColor} ${borderOpacity} ${borderWidth} 
+    ${cardExtraClass} ${cardTextClass}  ${borderRadius} ${cardBgClass}`),
         backgroundColor: cardBgStyle,
         ...cardTextStyle,
       }}
+      className={`${isHover ? "hover" : ""}`}
     >
       {cardbgImage && (
-        <div className="position-absolute top-0 start-0 w-100 h-100">
-          <img src={cardbgImage} alt="" className="w-100 h-100" />
+        <div
+          style={{ ...utils("position-absolute top-0 start-0 w-100 h-100") }}
+        >
+          <img src={cardbgImage} alt="" style={{ ...utils("w-100 h-100") }} />
           {cardBgClass && (
-            // <div className="position-absolute z-1 top-0 start-0 w-100 h-100 bg-opacity-75 bg-primary"></div>
             <div
-              className={`position-absolute z-1 top-0 start-0 w-100 h-100 ${cardBgClass}`}
               style={{
+                ...utils(
+                  `position-absolute z-1 top-0 start-0 w-100 h-100 ${cardBgClass}`
+                ),
                 "--bs-bg-opacity": cardbgopacity || 0.85,
               }}
             ></div>
           )}
         </div>
       )}
-      <style>
-        {`
-      .dynamic_Cta_Main > div:not(.position-absolute) {
-        z-index: 1;
-      }
-
-      .dynamic_Cta_Main .btn.text-decoration-none {
-        text-decoration: none !important;
-      }
-
-      .dynamic_Cta_Main h1,
-      .dynamic_Cta_Main h2,
-      .dynamic_Cta_Main h3,
-      .dynamic_Cta_Main h4,
-      .dynamic_Cta_Main h5,
-      .dynamic_Cta_Main h6 {
-        margin-bottom: 0 !important;
-      }
-
-      .feature_curve_bottom_left {
-            border-radius: 0 0 0 13px;
-      }
-    `}
-      </style>
       {renderImageBasedOnPosition()}
       {Array.isArray(formJson) && formJson?.length > 0 && (
         <FormQuestionModal

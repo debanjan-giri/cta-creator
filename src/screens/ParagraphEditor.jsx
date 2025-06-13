@@ -1,45 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { MdOpacity } from "react-icons/md";
-import { RenderComponent } from "../components/RenderComponent";
+import InputBox from "../components/InputBox";
+import ColorPickerBox from "../components/ColorPickerBox";
 
-const ParagraphEditorSchema = [
-  {
-    label: "Content",
-    placeholder: "Set Title",
-    isTextarea: true,
-    valueKey: "content",
-    component: "InputBox",
-  },
-  {
-    label: "Color",
-    data: {
-      primary: "#0000FF",
-      secondary: "#FF0000",
-      dark: "#000000",
-      light: "#FFFFFF",
-    },
-    valueKey: "color",
-    component: "ColorPickerBox",
-  },
-  {
-    label: "Text Opacity",
-    data: [
-      { key: "25", label: "25%", icon: MdOpacity },
-      { key: "50", label: "50%", icon: MdOpacity },
-      { key: "75", label: "75%", icon: MdOpacity },
-      { key: "100", label: "100%", icon: MdOpacity },
-    ],
-    valueKey: "opacity",
-    component: "Selector",
-  },
-  {
-    label: "Bootstrap Class",
-    placeholder: "Bootstrap Class",
-    isTextarea: true,
-    valueKey: "extraClass",
-    component: "InputBox",
-  },
-];
+import BootstrapVisualController from "../components/BootstrapModal";
+import QuilEditor from "../components/QuilEditor";
+import { Selector } from "../components/Selector";
+import { MdOpacity } from "react-icons/md";
 
 const ParagraphEditor = ({ onChange, changedData, modalComponent }) => {
   const [state, setState] = useState({
@@ -84,18 +50,55 @@ const ParagraphEditor = ({ onChange, changedData, modalComponent }) => {
   const isDisabled = !state.content?.trim();
   return (
     <div className="p-3 bg-white rounded shadow-sm ">
-      {ParagraphEditorSchema?.map((item, idx) => {
-        return (
-          <div key={idx} className="mb-3">
-            <RenderComponent
-              isDisabled={isDisabled}
-              item={item}
-              state={state}
-              onChange={handleStateChange}
-            />
-          </div>
-        );
-      })}
+      <div className="mb-3">
+        <InputBox
+          label="Content"
+          isTextarea={true}
+          value={state.content}
+          setValue={(val) => handleStateChange("content", val)}
+          placeholder="Set Title"
+        />
+      </div>
+
+      <div className="mb-3">
+        <ColorPickerBox
+          isDisabled={isDisabled}
+          label={"Color"}
+          data={{
+            primary: "#0000FF",
+            secondary: "#FF0000",
+            dark: "#000000",
+            light: "#FFFFFF",
+          }}
+          value={state.color}
+          setValue={(val) => handleStateChange("color", val)}
+        />
+      </div>
+
+      <div className="mb-3">
+        <Selector
+          label={"Text Opacity"}
+          data={[
+            { key: "25", label: "25%", icon: MdOpacity },
+            { key: "50", label: "50%", icon: MdOpacity },
+            { key: "75", label: "75%", icon: MdOpacity },
+            { key: "100", label: "100%", icon: MdOpacity },
+          ]}
+          value={state.opacity}
+          onSelect={(val) => handleStateChange("opacity", val)}
+        />
+      </div>
+
+      <div className="mb-3">
+        <InputBox
+          isDisabled={isDisabled}
+          label={"Extra Class"}
+          isTextarea={true}
+          placeholder={"Bootstrap Class"}
+          value={state.extraClass}
+          setValue={(val) => handleStateChange("extraClass", val)}
+        />
+      </div>
       <div
         style={{
           opacity: isDisabled ? 0.5 : 1,

@@ -16,56 +16,6 @@ import {
   AlignCenter,
   ArrowDown,
 } from "lucide-react";
-import { RenderComponent } from "../components/RenderComponent";
-
-const ImageEditorSchema = [
-  {
-    label: "Image Url",
-    placeholder: "Image Url",
-    valueKey: "url",
-    component: "InputBox",
-  },
-  {
-    label: "Size in pixels",
-    placeholder: "Size in pixels",
-    valueKey: "size",
-    component: "InputBox",
-  },
-  {
-    label: "Select Position",
-    data: [
-      { key: "right", label: "Right", icon: ArrowRight },
-      { key: "left", label: "Left", icon: ArrowLeft },
-      { key: "top", label: "Top", icon: ArrowUp },
-      { key: "bottom", label: "Bottom", icon: ArrowDown },
-      { key: "top-right", label: "Top Right", icon: ArrowUpRight },
-      { key: "top-left", label: "Top Left", icon: ArrowUpLeft },
-      { key: "bottom-left", label: "Bottom Left", icon: ArrowDownLeft },
-      {
-        key: "bottom-right",
-        label: "Bottom Right",
-        icon: ArrowDownRight,
-      },
-      { key: "top-center", label: "Top Center", icon: AlignCenter },
-    ],
-    valueKey: "position",
-    component: "Selector",
-  },
-  {
-    label: "Alt Text",
-    placeholder: "Alt Text",
-    valueKey: "alt",
-    component: "InputBox",
-  },
-  {
-    label: "Custom Css",
-    placeholder: "Bootstrap Class",
-    isTextarea: true,
-    valueKey: "extraClass",
-    component: "InputBox",
-  },
-];
-
 const ImageEditor = ({ onChange, changedData, modalComponent }) => {
   const [state, setState] = useState({
     url: changedData?.imageObject?.[0]?.url || "",
@@ -75,6 +25,7 @@ const ImageEditor = ({ onChange, changedData, modalComponent }) => {
     extraClass: changedData?.imageObject?.[0]?.extraClass || "",
   });
 
+  // Update local state when changedData prop changes (for template selection)
   useEffect(() => {
     setState({
       url: changedData?.imageObject?.[0]?.url || "",
@@ -109,17 +60,67 @@ const ImageEditor = ({ onChange, changedData, modalComponent }) => {
 
   return (
     <div className="p-3 bg-white rounded shadow-sm ">
-      {ImageEditorSchema?.map((item, idx) => (
-         <div key={idx} className="mb-3">
-        <RenderComponent
-          key={idx}
-          isDisabled={isDisabled}
-          item={item}
-          state={state}
-          onChange={handleStateChange}
+      <div className="mb-3">
+        <InputBox
+          label={"Url"}
+          placeholder={"Image Url"}
+          value={state.url}
+          setValue={(val) => handleStateChange("url", val)}
         />
       </div>
-      ))}
+      <div className="mb-3">
+        <InputBox
+          label={"Size in pixels"}
+          placeholder={"Image Size in pixels"}
+          value={state.size}
+          isDisabled={isDisabled}
+          setValue={(val) => handleStateChange("size", val)}
+        />
+      </div>
+      <div className="mb-3">
+        <Selector
+          isDisabled={isDisabled}
+          label="Select Position"
+          data={[
+            { key: "right", label: "Right", icon: ArrowRight },
+            { key: "left", label: "Left", icon: ArrowLeft },
+            { key: "top", label: "Top", icon: ArrowUp },
+            { key: "bottom", label: "Bottom", icon: ArrowDown },
+            { key: "top-right", label: "Top Right", icon: ArrowUpRight },
+            { key: "top-left", label: "Top Left", icon: ArrowUpLeft },
+            { key: "bottom-left", label: "Bottom Left", icon: ArrowDownLeft },
+            {
+              key: "bottom-right",
+              label: "Bottom Right",
+              icon: ArrowDownRight,
+            },
+            { key: "top-center", label: "Top Center", icon: AlignCenter },
+          ]}
+          value={state.position}
+          onSelect={(position) => handleStateChange("position", position)}
+        />
+      </div>
+
+      <div className="mb-3">
+        <InputBox
+          isDisabled={isDisabled}
+          label={"Alt Text"}
+          value={state.alt}
+          setValue={(val) => handleStateChange("alt", val)}
+          placeholder={"Enter Alt Text"}
+        />
+      </div>
+
+      <div className="mb-3">
+        <InputBox
+          isDisabled={isDisabled}
+          label={"Extra Class"}
+          placeholder={"Enter Bootstrap Class"}
+          value={state.extraClass}
+          isTextarea={true}
+          setValue={(val) => handleStateChange("extraClass", val)}
+        />
+      </div>
       <div
         style={{
           opacity: isDisabled ? 0.5 : 1,
