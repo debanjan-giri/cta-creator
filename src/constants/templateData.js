@@ -7,12 +7,6 @@ export const templateData = [
   {
     id: 4,
     name: "DAPT",
-    Json: {},
-    Type: {},
-    Type_id: "",
-    consent_statement: "",
-    Position: "",
-
     data: {
       tag: {
         text: "",

@@ -1,10 +1,10 @@
 import { memo } from "react";
 
 export const Selector = memo(
-  ({ setValue, label, data, disabled = false, value }) => {
+  ({ onSelect, label, data, disabled = false, value }) => {
     const handlePositionClick = (position) => {
-      if (!disabled && setValue) {
-        setValue(position);
+      if (!disabled && onSelect) {
+        onSelect(position);
       }
     };
 

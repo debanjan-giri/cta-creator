@@ -89,6 +89,8 @@ const Layout = () => {
     }
   };
 
+  console.log("editorData", editorData?.button[0]?.url);
+
   useEffect(() => {
     if (showMobileMenu) {
       document.addEventListener("click", handleOutsideClick);
@@ -102,7 +104,7 @@ const Layout = () => {
       <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
         <div className="navbar-brand text-muted fw-bold fs-5 d-flex align-items-center">
           <Braces className="me-2" />
-          Dynamic CTA Creator
+          Dynamic CTA creator
         </div>
 
         {/* Mobile hamburger menu */}
@@ -177,12 +179,12 @@ const Layout = () => {
         </div>
 
         <div className="ms-auto d-none d-sm-flex align-items-center gap-2">
-          <button
+          {/* <button
             className="btn btn-outline-secondary text-nowrap"
             onClick={() => toast.error("Under Development")}
           >
             Preview
-          </button>
+          </button> */}
           <button
             className="btn btn-outline-secondary text-nowrap"
             onClick={() => toast.error("Under Development")}
@@ -209,7 +211,7 @@ const Layout = () => {
                 {/* Menu Icon Bar */}
                 <div
                   className="bg-light border-end d-flex flex-column align-items-center py-3"
-                  style={{ minWidth: "90px" , maxWidth: "90px"}}
+                  style={{ minWidth: "90px", maxWidth: "90px" }}
                 >
                   <MenuIconBar
                     activeMenu={activeMenu}
@@ -300,7 +302,10 @@ const Layout = () => {
           {/* Mobile Preview View */}
           {mobile === 0 && (
             <div className="h-100 bg-light overflow-auto">
-              <CardPreview editorData={editorData} />
+              <CardPreview
+                editorData={editorData}
+                setActiveMenu={setActiveMenu}
+              />
             </div>
           )}
 

@@ -5,48 +5,6 @@ import InputBox from "../components/InputBox";
 import { Tabs, Tab } from "react-bootstrap";
 import { MdOutlineDelete } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
-import { RenderComponent } from "../components/RenderComponent";
-
-const formEditorSchema = [
-  {
-    label: "Label",
-    placeholder: "Enter Label",
-    valueKey: "label",
-    component: "InputBox",
-  },
-  {
-    label: "Field Name",
-    placeholder: "Enter Field Name",
-    valueKey: "field_name",
-    component: "InputBox",
-  },
-  {
-    label: "Field Type",
-    valueKey: "type",
-    component: "DropdownBox",
-    data: ["text", "number", "textarea", "radio", "checkbox", "dropdown"],
-  },
-  {
-    label: "Options",
-    valueKey: "options",
-    component: "DropdownBox",
-    data: ["male", "female","other"],
-  },
-  {
-    label: "Is Mandatory",
-    valueKey: "is_mandatory",
-    component: "DropdownBox",
-    data: ["0", "1"],
-  },
-  {
-    label: "Extra Class",
-    placeholder: "Enter Extra Class",
-    valueKey: "extraClass",
-    component: "InputBox",
-    isTextarea: true,
-  },
-];
-
 const FormEditor = ({ onChange, changedData }) => {
   const [forms, setForms] = useState([]);
 
@@ -66,6 +24,11 @@ const FormEditor = ({ onChange, changedData }) => {
   };
 
   const handleAddForm = () => {
+    if (forms.length >= 3) {
+      toast.error("You can only add up to 3 forms.");
+      return;
+    }
+
     const defaultForm = {
       label: "",
       field_name: "",
@@ -88,15 +51,55 @@ const FormEditor = ({ onChange, changedData }) => {
 
   const renderFormEditor = (form, index) => (
     <div key={index} className="p-3 bg-white rounded shadow-sm ">
-      {formEditorSchema.map((item, idx) => (
-        <div key={idx} className="mb-3">
-          <RenderComponent
-            item={item}
-            state={form}
-            onChange={(key, value) => handleUpdateForm(index, key, value)}
-          />
-        </div>
-      ))}
+      <div className="mb-3">
+        <InputBox
+          label={"Label"}
+          placeholder={"Enter Label"}
+          value={form.label}
+          setValue={(val) => handleUpdateForm(index, "label", val)}
+        />
+      </div>
+      <div className="mb-3">
+        <InputBox
+          label={"Field Name"}
+          placeholder={"Enter Field Name"}
+          value={form.field_name}
+          setValue={(val) => handleUpdateForm(index, "field_name", val)}
+        />
+      </div>
+      <div className="mb-3">
+        <DropdownBox
+          label={"Field Type"}
+          value={form.type}
+          setValue={(val) => handleUpdateForm(index, "type", val)}
+          data={["text", "number", "textarea", "radio", "checkbox", "dropdown"]}
+        />
+      </div>
+      <div className="mb-3">
+        <DropdownBox
+          label={"Options"}
+          value={form.options}
+          setValue={(val) => handleUpdateForm(index, "options", val)}
+          data={["male", "female"]}
+        />
+      </div>
+      <div className="mb-3">
+        <DropdownBox
+          label={"Is Mandatory"}
+          value={form.is_mandatory}
+          setValue={(val) => handleUpdateForm(index, "is_mandatory", val)}
+          data={["0", "1"]}
+        />
+      </div>
+      <div className="mb-3">
+        <InputBox
+          label={"Extra Class"}
+          isTextarea={true}
+          placeholder={"Enter Extra Class"}
+          value={form.extraClass}
+          setValue={(val) => handleUpdateForm(index, "extraClass", val)}
+        />
+      </div>
     </div>
   );
 
@@ -117,7 +120,7 @@ const FormEditor = ({ onChange, changedData }) => {
               key={idx}
               title={
                 <span className="d-inline-flex align-items-center gap-1">
-                  <span>Field {idx + 1}</span>
+                  <span>Filed {idx + 1}</span>
                   <span
                     onClick={(e) => {
                       e.stopPropagation();
