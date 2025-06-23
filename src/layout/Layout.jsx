@@ -89,8 +89,6 @@ const Layout = () => {
     }
   };
 
-  console.log("editorData", editorData?.button[0]?.url);
-
   useEffect(() => {
     if (showMobileMenu) {
       document.addEventListener("click", handleOutsideClick);

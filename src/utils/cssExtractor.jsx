@@ -198,7 +198,7 @@
 //   return style;
 // };
 
-// Enhanced Bootstrap utilities to inline CSS converter
+
 const spacingMap = {
   0: "0px",
   1: "0.25rem", // 4px
@@ -375,10 +375,7 @@ export const utils = (classNames = "", styleObj = {}) => {
   const classes = classNames.split(" ").filter((cls) => cls.trim());
 
   classes.forEach((cls) => {
-    // Skip empty classes
     if (!cls) return;
-
-    // Spacing utilities (margin/padding)
     let match = cls.match(/^([mp])([trblxyse]?)-([0-5])$/);
     if (match) {
       const [, type, dir, size] = match;
