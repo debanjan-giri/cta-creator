@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "./layout/Layout";
-import FromPage from "./screens/fromPage";
+import FromPage from "./screens/FromPage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
