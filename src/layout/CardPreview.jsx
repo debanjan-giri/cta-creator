@@ -14,11 +14,10 @@ import parse from 'html-react-parser';
 
 
 const CardPreview = memo(
-  ({ editorData, activeMenu, setActiveMenu, isHover }) => {
+  ({ editorData, activeMenu, setActiveMenu, isHover, domTree = "", setDomTree = () => { } }) => {
     const [open, setOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("Json"); // Default to JSON tab
     const containerRef = useRef(null);
-    const [domTree, setDomTree] = useState("");
 
     useEffect(() => {
       if (containerRef.current) {
