@@ -59,6 +59,7 @@ const Layout = () => {
   const ActiveComponent = menuDetails[activeMenu]?.component || TitleEditor;
   const [mobile, setMobile] = useState(0);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [domTree, setDomTree] = useState("");
 
   // Handle template selection
   const handleTemplateSelect = (templateData) => {
@@ -140,9 +141,8 @@ const Layout = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className={`btn btn-sm w-100 mb-2 ${
-                  mobile === 0 ? "btn-primary" : "btn-outline-secondary"
-                }`}
+                className={`btn btn-sm w-100 mb-2 ${mobile === 0 ? "btn-primary" : "btn-outline-secondary"
+                  }`}
                 onClick={() => {
                   setMobile(0);
                   setShowMobileMenu(false);
@@ -151,9 +151,8 @@ const Layout = () => {
                 Preview
               </button>
               <button
-                className={`btn btn-sm w-100 mb-2 ${
-                  mobile === 1 ? "btn-primary" : "btn-outline-secondary"
-                }`}
+                className={`btn btn-sm w-100 mb-2 ${mobile === 1 ? "btn-primary" : "btn-outline-secondary"
+                  }`}
                 onClick={() => {
                   setMobile(1);
                   setShowMobileMenu(false);
@@ -162,9 +161,8 @@ const Layout = () => {
                 Editor
               </button>
               <button
-                className={`btn btn-sm w-100 ${
-                  mobile === 2 ? "btn-primary" : "btn-outline-secondary"
-                }`}
+                className={`btn btn-sm w-100 ${mobile === 2 ? "btn-primary" : "btn-outline-secondary"
+                  }`}
                 onClick={() => {
                   setMobile(2);
                   setShowMobileMenu(false);
@@ -191,8 +189,8 @@ const Layout = () => {
           </button>
           <button
             className="btn btn-primary d-flex align-items-center gap-1"
-             onClick={() => {
-              const dataToSend = { action: "save", payload: { name: "John Doe", age: 30 } };
+            onClick={() => {
+              const dataToSend = { json: editorData || {}, html: domTree || <h1>No Data</h1> };
               window.parent.postMessage(dataToSend, "*");
             }}
           >
@@ -243,6 +241,8 @@ const Layout = () => {
             <div className="col-md-4 h-100 border-end bg-light">
               <div className="h-100 overflow-auto">
                 <CardPreview
+                  domTree={domTree}
+                  setDomTree={setDomTree}
                   isHover={true}
                   setActiveMenu={setActiveMenu}
                   editorData={editorData}
@@ -304,8 +304,12 @@ const Layout = () => {
           {mobile === 0 && (
             <div className="h-100 bg-light overflow-auto">
               <CardPreview
-                editorData={editorData}
+                domTree={domTree}
+                setDomTree={setDomTree}
+                isHover={true}
                 setActiveMenu={setActiveMenu}
+                editorData={editorData}
+                handleEditorChange={handleEditorChange}
               />
             </div>
           )}
@@ -314,8 +318,10 @@ const Layout = () => {
           {mobile === 2 && (
             <div className="h-100 overflow-auto p-3">
               <CardTemplate
+                activeMenu={activeMenu}
                 setEditorData={setEditorData}
                 editorData={editorData}
+                onChange={handleEditorChange}
                 onSelectTemplate={handleTemplateSelect}
               />
             </div>
