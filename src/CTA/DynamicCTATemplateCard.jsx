@@ -191,6 +191,8 @@ export const DynamicCTATemplateCard = ({
       toast.error("Please fill all mandatory fields");
       return;
     }
+
+    return;
     // let response = await axiosInstance.post("cta/cta_submitted_forms", {
     //   cta_id: ctaId,
     //   cta_type: ctaType,
@@ -209,6 +211,7 @@ export const DynamicCTATemplateCard = ({
 
     return (
       <div
+        title="Tag"
         onClick={(e) => {
           if (disablePropagation) {
             e.stopPropagation();
@@ -244,6 +247,7 @@ export const DynamicCTATemplateCard = ({
   const renderTitle = () => {
     return (
       <div
+        title="Title"
         onClick={(e) => {
           if (disablePropagation) {
             e.stopPropagation();
@@ -289,6 +293,7 @@ export const DynamicCTATemplateCard = ({
 
     return (
       <p
+        title="Paragraph"
         onClick={(e) => {
           if (disablePropagation) {
             e.stopPropagation();
@@ -386,7 +391,7 @@ export const DynamicCTATemplateCard = ({
             ? btn.variation
             : "";
           const buttonStyle = btn.variation?.startsWith("#")
-            ? { backgroundColor: btn.variation, color: btn.btnTextColor , border: "none" }
+            ? { backgroundColor: btn.variation, color: btn.btnTextColor, border: "none" }
             : {};
           // const buttonClassWraper = (btn.buttonClassWraper?.startsWith('w-') || btn.buttonClassWraper?.startsWith('btn-')) ? btn.buttonClassWraper : '';
 
@@ -401,6 +406,7 @@ export const DynamicCTATemplateCard = ({
 
           return (
             <div
+              title="Button"
               key={index}
               style={{
                 ...utils(` d-flex align-items-center ${buttonWraper}`),
@@ -548,6 +554,7 @@ export const DynamicCTATemplateCard = ({
             width: size || "75px",
             minHeight: position === "left" ? "100%" : null,
           }}
+          title="Image"
           className={`${isHover ? "hover" : ""}`}
         />
       </div>
@@ -588,6 +595,7 @@ export const DynamicCTATemplateCard = ({
               ...utils(`d-flex flex-shrink-0  w-auto mw-25 ${extraClass}`),
               height: size || "36px",
             }}
+            title="Image"
             className={`${isHover ? "hover" : ""}`}
           />
           {renderTitle()}
@@ -641,6 +649,7 @@ export const DynamicCTATemplateCard = ({
               ...utils(`d-flex flex-shrink-0 w-auto mw-25 ${extraClass}`),
               height: size || "36px",
             }}
+            title="Image"
             className={`${isHover ? "hover" : ""}`}
           />
         </div>
@@ -675,6 +684,7 @@ export const DynamicCTATemplateCard = ({
 
   return (
     <div
+      title="Card"
       onClick={(e) => {
         if (disablePropagation) {
           e.stopPropagation();
@@ -689,6 +699,7 @@ export const DynamicCTATemplateCard = ({
         backgroundColor: cardBgStyle,
         ...cardTextStyle,
       }}
+      
       className={`${isHover ? "hover" : ""}`}
     >
       {cardbgImage && (

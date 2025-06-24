@@ -216,7 +216,7 @@ const CardPreview = memo(
         ) : (
           <div ref={containerRef}>
             {editorData ? (
-              <div className="">
+                <div className="bg-white rounded-3">
                 <DynamicCTATemplateCard
                   isHover={isHover}
                   setActiveMenu={setActiveMenu}

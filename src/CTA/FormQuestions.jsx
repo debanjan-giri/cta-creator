@@ -14,20 +14,6 @@ const FormQuestions = ({
 }) => {
   const { field_name, type, is_mandatory, options, label } = question;
 
-  // if (field_name == 'phone') {
-  //   return (
-  //     <div className="col-12 shareLoginV2FormRow shareLoginV2MobileNo rounded-3 mt-4 position-relative p-0 border border-light">
-  //       <MobileNumber
-  //         gtmTagVariable={'question_' + field_name}
-  //         value={userInput?.phone}
-  //         onChangeIsd={(_isd) => setIsd(_isd)}
-  //         onChange={handleUserTextInput}
-  //         onKeyPress={(e) => {}}
-  //         isGlobalRegion={isGlobalRegion}
-  //       />
-  //     </div>
-  //   );
-  // } else {
   switch (type) {
     case "text":
     case "number":
@@ -91,19 +77,8 @@ const FormQuestions = ({
           is_mandatory={is_mandatory}
         />
       );
-    //   case 'fileupload':
-    //     return (
-    //       <FileUpload
-    //         label={field_name}
-    //         fileUpload={(_file) => fileUpload(field_name, _file)}
-    //         attachedFile={uploadedFiles[field_name]}
-    //         is_mandatory={is_mandatory}
-    //         cancelClick={(_file) => cancelUpload(field_name, _file)}
-    //       />
-    //     );
     default:
       return <></>;
-    //  }
   }
 };
 

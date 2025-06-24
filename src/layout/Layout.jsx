@@ -29,6 +29,7 @@ import { Button, Container, Navbar } from "react-bootstrap";
 import templateData from "../constants/templateData";
 import BootstrapVisualController from "../components/BootstrapModal";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 const menuDetails = {
   title: {
@@ -53,13 +54,14 @@ const menuDetails = {
   others: { component: OthersEditor, icon: FileCog, text: "Type" },
 };
 
-const Layout = () => {
+const Layout = ({ editorData, setEditorData }) => {
   const [activeMenu, setActiveMenu] = useState("title");
-  const [editorData, setEditorData] = useState(templateData[0]?.data);
   const ActiveComponent = menuDetails[activeMenu]?.component || TitleEditor;
   const [mobile, setMobile] = useState(0);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [domTree, setDomTree] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   // Handle template selection
   const handleTemplateSelect = (templateData) => {
@@ -101,7 +103,7 @@ const Layout = () => {
     <div className="d-flex flex-column vh-100">
       {/* Navigation Bar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
-        <div className="navbar-brand text-muted fw-bold fs-5 d-flex align-items-center">
+        <div onClick={() => navigate('/')} style={{ cursor: "pointer" }} className=" navbar-brand text-muted fw-bold fs-5 d-flex align-items-center">
           <Braces className="me-2" />
           Dynamic CTA creator
         </div>
