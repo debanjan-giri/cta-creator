@@ -687,7 +687,6 @@ export const DynamicCTATemplateCard = ({
     ${border} ${borderColor} ${borderOpacity} ${borderWidth} 
     ${cardExtraClass} ${cardTextClass}  ${borderRadius} ${cardBgClass}`),
         backgroundColor: cardBgStyle,
-        backgroundColor: "#ffffff",
         ...cardTextStyle,
       }}
       className={`${isHover ? "hover" : ""}`}

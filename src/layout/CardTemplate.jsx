@@ -138,7 +138,7 @@ const CardTemplate = memo(
             style={{
               overflowY: "scroll",
               flex: 1,
-              paddingRight: "4px",
+              
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               WebkitOverflowScrolling: "touch",
