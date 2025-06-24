@@ -191,7 +191,10 @@ const Layout = () => {
           </button>
           <button
             className="btn btn-primary d-flex align-items-center gap-1"
-            onClick={() => toast.error("Under Development")}
+             onClick={() => {
+              const dataToSend = { action: "save", payload: { name: "John Doe", age: 30 } };
+              window.parent.postMessage(dataToSend, "*");
+            }}
           >
             Publish <CircleArrowRight size={18} />
           </button>
