@@ -52,7 +52,7 @@ A powerful and flexible React-based tool for creating customizable Call-to-Actio
 
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone https://github.com/debanjan-giri/cta-creator
 cd cta-creator
 ```
 
