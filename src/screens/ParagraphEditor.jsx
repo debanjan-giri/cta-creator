@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import InputBox from "../components/InputBox";
 import ColorPickerBox from "../components/ColorPickerBox";
-
-import BootstrapVisualController from "../components/BootstrapModal";
-import QuilEditor from "../components/QuilEditor";
 import { Selector } from "../components/Selector";
 import { MdOpacity } from "react-icons/md";
 

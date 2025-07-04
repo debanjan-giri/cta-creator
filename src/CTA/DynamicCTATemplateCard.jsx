@@ -191,7 +191,6 @@ export const DynamicCTATemplateCard = ({
       toast.error("Please fill all mandatory fields");
       return;
     }
-
     return;
     // let response = await axiosInstance.post("cta/cta_submitted_forms", {
     //   cta_id: ctaId,

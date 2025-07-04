@@ -3,7 +3,7 @@ import InputBox from "../components/InputBox";
 import DropdownBox from "../components/DropdownBox";
 
 import { Selector } from "../components/Selector";
-import BootstrapVisualController from "../components/BootstrapModal";
+
 import {
   ArrowUpRight,
   ArrowUpLeft,

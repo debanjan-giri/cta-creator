@@ -35,6 +35,8 @@ const BootstrapVisualController = ({
   const [selectedClasses, setSelectedClasses] = useState({});
   const [preservedClasses, setPreservedClasses] = useState("");
   const [activeTab, setActiveTab] = useState("typography");
+  const [manualClasses, setManualClasses] = useState("");
+  const [isManualEdit, setIsManualEdit] = useState(false);
 
   const sectionConfig = {
     title: { label: "Title", icon: <FiType /> },
@@ -82,15 +84,47 @@ const BootstrapVisualController = ({
     const parsed = parseExistingClasses(currentClasses);
     setSelectedClasses(parsed.controlled);
     setPreservedClasses(parsed.preserved);
-  }, [selectedSection, changedData]);
+    if (!isManualEdit) {
+      setManualClasses(currentClasses);
+    }
+  }, [selectedSection, changedData, isManualEdit]);
+
+  // const handleClassChange = (category, newValue) => {
+  //   const updated = { ...selectedClasses, [category]: newValue };
+  //   setSelectedClasses(updated);
+  //   const controlledClasses = Object.values(updated).filter(Boolean).join(" ");
+  //   const allClasses = [preservedClasses, controlledClasses]
+  //     .filter(Boolean)
+  //     .join(" ");
+
+  //   if (onChange && changedData[selectedSection]) {
+  //     onChange(
+  //       {
+  //         ...changedData[selectedSection],
+  //         extraClass: allClasses,
+  //       },
+  //       selectedSection
+  //     );
+  //   }
+  // };
+
+  // const getAllClasses = () => {
+  //   const controlledClasses = Object.values(selectedClasses)
+  //     .filter(Boolean)
+  //     .join(" ");
+  //   return [preservedClasses, controlledClasses].filter(Boolean).join(" ");
+  // };
 
   const handleClassChange = (category, newValue) => {
+    setIsManualEdit(false); // Switch back to controlled mode
     const updated = { ...selectedClasses, [category]: newValue };
     setSelectedClasses(updated);
     const controlledClasses = Object.values(updated).filter(Boolean).join(" ");
     const allClasses = [preservedClasses, controlledClasses]
       .filter(Boolean)
       .join(" ");
+
+    setManualClasses(allClasses); // Keep manual classes in sync
 
     if (onChange && changedData[selectedSection]) {
       onChange(
@@ -104,10 +138,30 @@ const BootstrapVisualController = ({
   };
 
   const getAllClasses = () => {
+    if (isManualEdit) {
+      return manualClasses;
+    }
     const controlledClasses = Object.values(selectedClasses)
       .filter(Boolean)
       .join(" ");
     return [preservedClasses, controlledClasses].filter(Boolean).join(" ");
+  };
+
+  const handleManualClassChange = (e) => {
+    const newValue = e.target.value;
+    setManualClasses(newValue);
+    setIsManualEdit(true);
+
+    // Apply changes immediately for live preview
+    if (onChange && changedData[selectedSection]) {
+      onChange(
+        {
+          ...changedData[selectedSection],
+          extraClass: newValue,
+        },
+        selectedSection
+      );
+    }
   };
 
   const clearAllClasses = () => {
@@ -254,14 +308,12 @@ const BootstrapVisualController = ({
       `}</style>
 
       <Button
-        variant={isLightButton ? "primary" : "light"}
-        className={`mb-3 d-flex align-items-center gap-2 ${
-          isLightButton ? "" : ""
-        }`}
+        variant={!isLightButton ? "primary" : "light"}
+        className={`mb-3 d-flex align-items-center gap-2`}
         onClick={() => setShowModal(true)}
         disabled={disabled}
       >
-        <FiBox className="me-2" />Style Controller
+        <FiBox className="" />{isLightButton ? "Advanced" : "Style Controller"}
       </Button>
 
       {showModal && (
@@ -313,9 +365,8 @@ const BootstrapVisualController = ({
                             style={{ width: "auto" }}
                           >
                             <button
-                              className={`tab-btn ${
-                                activeTab === section.key ? "active" : ""
-                              }`}
+                              className={`tab-btn ${activeTab === section.key ? "active" : ""
+                                }`}
                               onClick={() => setActiveTab(section.key)}
                             >
                               {section.icon}
@@ -372,6 +423,8 @@ const BootstrapVisualController = ({
                         className="form-control form-control-sm font-monospace"
                         rows="3"
                         value={getAllClasses()}
+                        onChange={handleManualClassChange}
+                        placeholder="Enter Bootstrap classes manually..."
                         style={{ fontSize: "0.8em", resize: "none" }}
                       />
                     </div>

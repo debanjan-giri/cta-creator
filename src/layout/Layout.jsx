@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import {
   SquarePilcrow,
   Heart,
@@ -14,22 +14,22 @@ import {
 } from "lucide-react";
 
 import "react-toastify/dist/ReactToastify.css";
-import TitleEditor from "../screens/TitleEditor";
-import ImageEditor from "../screens/ImageEditor";
-import ButtonEditor from "../screens/ButtonEditor";
-import TagEditor from "../screens/TagEditor";
-import CardEditor from "../screens/CardEditor";
-import FormEditor from "../screens/FormEditor";
-import OthersEditor from "../screens/OthersEditor";
-import ParagraphEditor from "../screens/ParagraphEditor";
-import CardPreview from "./CardPreview";
-import CardTemplate from "./CardTemplate";
-import MenuIconBar from "./MenuIconBar";
-import { Button, Container, Navbar } from "react-bootstrap";
-import templateData from "../constants/templateData";
-import BootstrapVisualController from "../components/BootstrapModal";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+
+const TitleEditor = lazy(() => import("../screens/TitleEditor"));
+const ImageEditor = lazy(() => import("../screens/ImageEditor"));
+const ButtonEditor = lazy(() => import("../screens/ButtonEditor"));
+const TagEditor = lazy(() => import("../screens/TagEditor"));
+const CardEditor = lazy(() => import("../screens/CardEditor"));
+const FormEditor = lazy(() => import("../screens/FormEditor"));
+const OthersEditor = lazy(() => import("../screens/OthersEditor"));
+const ParagraphEditor = lazy(() => import("../screens/ParagraphEditor"));
+const CardPreview = lazy(() => import("./CardPreview"));
+const CardTemplate = lazy(() => import("./CardTemplate"));
+const MenuIconBar = lazy(() => import("./MenuIconBar"));
+const BootstrapVisualController = lazy(() => import("../components/BootstrapModal"));
+
 
 const menuDetails = {
   title: {
@@ -54,13 +54,12 @@ const menuDetails = {
   others: { component: OthersEditor, icon: FileCog, text: "Type" },
 };
 
-const Layout = ({ editorData, setEditorData }) => {
+const Layout = ({ editorData, setEditorData, clearStorage }) => {
   const [activeMenu, setActiveMenu] = useState("title");
   const ActiveComponent = menuDetails[activeMenu]?.component || TitleEditor;
   const [mobile, setMobile] = useState(0);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [domTree, setDomTree] = useState("");
-  const { id } = useParams();
   const navigate = useNavigate();
 
   // Handle template selection
@@ -192,6 +191,7 @@ const Layout = ({ editorData, setEditorData }) => {
           <button
             className="btn btn-primary d-flex align-items-center gap-1"
             onClick={() => {
+              clearStorage();
               const dataToSend = { json: editorData || {}, html: domTree || <h1>No Data</h1> };
               window.parent.postMessage(dataToSend, "*");
             }}
@@ -222,19 +222,21 @@ const Layout = ({ editorData, setEditorData }) => {
                 </div>
                 {/* Editor Content */}
                 <div className="flex-grow-1 overflow-auto p-3">
-                  <ActiveComponent
-                    activeMenu={activeMenu}
-                    changedData={editorData}
-                    onChange={handleEditorChange}
-                    modalComponent={
-                      <BootstrapVisualController
-                        onChange={handleEditorChange}
-                        changedData={editorData}
-                        activeMenu={activeMenu}
-                        isLightButton={true}
-                      />
-                    }
-                  />
+                  <Suspense fallback={<div className="text-center p-3">Loading...</div>}>
+                    <ActiveComponent
+                      activeMenu={activeMenu}
+                      changedData={editorData}
+                      onChange={handleEditorChange}
+                      modalComponent={
+                        <BootstrapVisualController
+                          onChange={handleEditorChange}
+                          changedData={editorData}
+                          activeMenu={activeMenu}
+                       
+                        />
+                      }
+                    />
+                  </Suspense>
                 </div>
               </div>
             </div>
@@ -286,18 +288,20 @@ const Layout = ({ editorData, setEditorData }) => {
               </div>
               {/* Editor Content */}
               <div className="flex-grow-1 overflow-auto p-3">
-                <ActiveComponent
-                  activeMenu={activeMenu}
-                  changedData={editorData}
-                  onChange={handleEditorChange}
-                  modalComponent={
-                    <BootstrapVisualController
-                      onChange={handleEditorChange}
-                      changedData={editorData}
-                      activeMenu={activeMenu}
-                    />
-                  }
-                />
+                <Suspense fallback={<div className="text-center p-3">Loading...</div>}>
+                  <ActiveComponent
+                    activeMenu={activeMenu}
+                    changedData={editorData}
+                    onChange={handleEditorChange}
+                    modalComponent={
+                      <BootstrapVisualController
+                        onChange={handleEditorChange}
+                        changedData={editorData}
+                        activeMenu={activeMenu}
+                      />
+                    }
+                  />
+                </Suspense>
               </div>
             </div>
           )}

@@ -119,7 +119,7 @@ const CardPreview = memo(
             border-radius: 2px;
             transition: all 0.2s ease;
           }
-          .tab-btn .icon {
+          .tab-btn .icon { 
             margin-bottom: 0.25rem;
             font-size: 1.1rem;
           }

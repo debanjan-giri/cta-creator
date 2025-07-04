@@ -7,18 +7,11 @@ import {
     Eye,
     Settings,
     Star,
-    ArrowRight,
+
     CheckCircle,
     Sparkles,
-    Mouse,
-    Layers,
-    Monitor,
-    Smartphone,
     Github,
-    Download,
-    Menu,
-    X,
-    Braces,
+
     FileText,
     Move3D
 } from 'lucide-react';
@@ -171,7 +164,7 @@ const LandingPage = () => {
                         <div className={`collapse navbar-collapse justify-content-end ${isMenuOpen ? 'show' : ''}`}>
                             <button
                                 className="btn btn-gradient text-white px-4 py-2"
-                                onClick={() => navigate('/00')}
+                                onClick={() => navigate('/dashboard')}
                             >
                                 Get Started
                             </button>
@@ -203,7 +196,7 @@ const LandingPage = () => {
                             </p>
 
                             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                                <button onClick={() => navigate('/00')} className="btn btn-gradient text-white px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
+                                <button onClick={() => navigate('/dashboard')} className="btn btn-gradient text-white px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
                                     <Play size={20} className="me-2" />
                                     Start Building
                                 </button>

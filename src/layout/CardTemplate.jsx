@@ -76,7 +76,6 @@ const CardTemplate = memo(
     editorData,
     onSelectTemplate,
     setEditorData,
-    handleEditorChange,
     activeMenu,
     onChange,
   }) => {
@@ -100,45 +99,36 @@ const CardTemplate = memo(
             <p>Create Your CTA Cards</p>
             <div className="d-flex gap-2 flex-wrap">
               <Button
-                variant="light"
-                className="d-flex align-items-center gap-2"
+                variant={"light"}
+                className={`mb-3 d-flex align-items-center gap-2`}
                 onClick={() => {
                   setEditorData(InitialJson);
                   setSelectedTemplateId(null);
                 }}
               >
                 <FaPlus className="icon-animate" />
-                <span>Create New Card</span>
+                Create New Card
               </Button>
-
-              <GeminJsonCreator onSelectTemplate={onSelectTemplate} />
-              {/* <Button
-              variant="outline-primary"
-              onClick={() => {
-                toast.info("Image upload feature coming soon!");
-              }}
-            >
-              + Image Upload
-            </Button> */}
 
               <GenerateJsonComponent onSelectTemplate={onSelectTemplate} />
 
-              <BootstrapVisualController
-                onChange={onChange}
-                changedData={editorData}
-                isLightButton={false}
-                activeMenu={activeMenu}
-              />
+              <div>
+                <BootstrapVisualController
+                  onChange={onChange}
+                  changedData={editorData}
+                  isLightButton={true}
+                  activeMenu={activeMenu}
+                />
+              </div>
             </div>
             <hr />
           </div>
 
-          {/* Scrollable and visually hidden scrollbar */}
           <div
             style={{
               overflowY: "scroll",
               flex: 1,
-              
+
               scrollbarWidth: "none",
               msOverflowStyle: "none",
               WebkitOverflowScrolling: "touch",
@@ -157,11 +147,10 @@ const CardTemplate = memo(
                   return (
                     <div
                       key={template.id}
-                      className={`template-card p-2 rounded mb-3 position-relative ${
-                        isSelected
-                          ? "template-card-selected"
-                          : "template-card-default"
-                      }`}
+                      className={`template-card p-2 rounded mb-3 position-relative ${isSelected
+                        ? "template-card-selected"
+                        : "template-card-default"
+                        }`}
                       onClick={(e) => {
                         setSelectedTemplateId(template.id);
                         onSelectTemplate(template.data);

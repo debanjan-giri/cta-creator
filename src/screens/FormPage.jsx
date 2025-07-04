@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Button,
@@ -7,9 +8,35 @@ import {
   Col,
   FloatingLabel,
 } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const FormPage = ({ form = [] }) => {
+const FormPage = () => {
   const [userInput, setUserInput] = useState({});
+  const { ctaType = "", id = "", token = "" } = useParams();
+  const [form, setForm] = useState([]);
+
+  useEffect(() => {
+    if (!id || !ctaType || !token) {
+      toast.error("Unable to load form data");
+      console.error("Invalid form submission parameters");
+    }
+
+    const fetchForm = async () => {
+      try {
+        const response = await axios.get(`cta/cta_forms/${id}/${ctaType}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
+        setForm(data?.data);
+      } catch (error) {
+        console.error("Error fetching form data:", error);
+      }
+    };
+    fetchForm();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -33,32 +60,41 @@ const FormPage = ({ form = [] }) => {
     }
   };
 
-  // const postForm = async (userInput) => {
-  //   console.log("user has clicked submit button");
-  //   if (
-  //     form.some((_q) => _q.is_mandatory == 1 && !userInput[_q.field_name])
-  //   ) {
-  //     toast.error("Please fill all mandatory fields");
-  //     return;
-  //   }
-  //   let response = await axios.post("cta/cta_submitted_forms", {
-  //     cta_id: 78,
-  //     cta_type: "form",
-  //     submitted_form_json: userInput,
-  //   });
-  //   console.log("response:", response);
-  //   if (response.status == 200) {
-  //     toast.success("Your Response submitted successfully");
-  //     // onHide();
-  //   }
-  // };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", userInput);
-    // postForm(userInput);
-    const dataToSend = { data: userInput, formId: form[0]?.form_id || null };
-    window.parent.postMessage(dataToSend, "*");
+
+    if (!id || !ctaType || !token) {
+      toast.error("Invalid form submission parameters");
+      console.error("Invalid form submission parameters");
+      return;
+    }
+
+    if (!userInput || Object.keys(userInput).length === 0) {
+      toast.error("Please fill the form before submitting");
+      console.error("Invalid form submission data");
+      return;
+    }
+
+    if (
+      form.some((_q) => _q.is_mandatory == 1 && !userInput[_q.field_name])
+    ) {
+      toast.error("Please fill all mandatory fields");
+      return;
+    }
+    let response = await axios.post("cta/cta_submitted_forms", {
+      cta_id: id,
+      cta_type: ctaType,
+      submitted_form_json: userInput,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log("response:", response);
+    if (response.status == 200) {
+      toast.success("Your Response submitted successfully");
+    }
   };
 
   if (!form || form.length === 0) {
