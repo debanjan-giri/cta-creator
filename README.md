@@ -86,8 +86,8 @@ npm run preview
 
 ```
 src/
-├── components/         # Reusable UI components
-├── constants/         # Application constants and data
+├── components/       # Reusable UI components
+├── constants/        # Application constants and data
 ├── css/              # Global styles
 ├── CTA/              # CTA-specific components
 ├── layout/           # Layout components
@@ -106,4 +106,4 @@ src/
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details
+This project is licensed under the MIT License
