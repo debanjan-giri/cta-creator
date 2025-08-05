@@ -28,8 +28,9 @@ const ParagraphEditor = lazy(() => import("../screens/ParagraphEditor"));
 const CardPreview = lazy(() => import("./CardPreview"));
 const CardTemplate = lazy(() => import("./CardTemplate"));
 const MenuIconBar = lazy(() => import("./MenuIconBar"));
-const BootstrapVisualController = lazy(() => import("../components/BootstrapModal"));
-
+const BootstrapVisualController = lazy(() =>
+  import("../components/BootstrapModal")
+);
 
 const menuDetails = {
   title: {
@@ -102,7 +103,11 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
     <div className="d-flex flex-column vh-100">
       {/* Navigation Bar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom px-4 py-3">
-        <div onClick={() => navigate('/')} style={{ cursor: "pointer" }} className=" navbar-brand text-muted fw-bold fs-5 d-flex align-items-center">
+        <div
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
+          className=" navbar-brand text-muted fw-bold fs-5 d-flex align-items-center"
+        >
           <Braces className="me-2" />
           Dynamic CTA creator
         </div>
@@ -142,8 +147,9 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className={`btn btn-sm w-100 mb-2 ${mobile === 0 ? "btn-primary" : "btn-outline-secondary"
-                  }`}
+                className={`btn btn-sm w-100 mb-2 ${
+                  mobile === 0 ? "btn-primary" : "btn-outline-secondary"
+                }`}
                 onClick={() => {
                   setMobile(0);
                   setShowMobileMenu(false);
@@ -152,8 +158,9 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
                 Preview
               </button>
               <button
-                className={`btn btn-sm w-100 mb-2 ${mobile === 1 ? "btn-primary" : "btn-outline-secondary"
-                  }`}
+                className={`btn btn-sm w-100 mb-2 ${
+                  mobile === 1 ? "btn-primary" : "btn-outline-secondary"
+                }`}
                 onClick={() => {
                   setMobile(1);
                   setShowMobileMenu(false);
@@ -162,8 +169,9 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
                 Editor
               </button>
               <button
-                className={`btn btn-sm w-100 ${mobile === 2 ? "btn-primary" : "btn-outline-secondary"
-                  }`}
+                className={`btn btn-sm w-100 ${
+                  mobile === 2 ? "btn-primary" : "btn-outline-secondary"
+                }`}
                 onClick={() => {
                   setMobile(2);
                   setShowMobileMenu(false);
@@ -192,8 +200,11 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
             className="btn btn-primary d-flex align-items-center gap-1"
             onClick={() => {
               clearStorage();
-              const dataToSend = { json: editorData || {}, html: domTree || <h1>No Data</h1> };
-              window.parent.postMessage(dataToSend, "*");
+              const dataToSend = {
+                json: editorData || {},
+                html: domTree || <h1>No Data</h1>,
+              };
+              window.submitCtaContent(dataToSend);
             }}
           >
             Publish <CircleArrowRight size={18} />
@@ -222,7 +233,9 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
                 </div>
                 {/* Editor Content */}
                 <div className="flex-grow-1 overflow-auto p-3">
-                  <Suspense fallback={<div className="text-center p-3">Loading...</div>}>
+                  <Suspense
+                    fallback={<div className="text-center p-3">Loading...</div>}
+                  >
                     <ActiveComponent
                       activeMenu={activeMenu}
                       changedData={editorData}
@@ -232,7 +245,6 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
                           onChange={handleEditorChange}
                           changedData={editorData}
                           activeMenu={activeMenu}
-                       
                         />
                       }
                     />
@@ -288,7 +300,9 @@ const Layout = ({ editorData, setEditorData, clearStorage }) => {
               </div>
               {/* Editor Content */}
               <div className="flex-grow-1 overflow-auto p-3">
-                <Suspense fallback={<div className="text-center p-3">Loading...</div>}>
+                <Suspense
+                  fallback={<div className="text-center p-3">Loading...</div>}
+                >
                   <ActiveComponent
                     activeMenu={activeMenu}
                     changedData={editorData}

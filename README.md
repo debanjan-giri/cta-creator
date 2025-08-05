@@ -52,7 +52,7 @@ A powerful and flexible React-based tool for creating customizable Call-to-Actio
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/debanjan-giri/cta-creator
+git clone [repository-url]
 cd cta-creator
 ```
 
@@ -86,8 +86,8 @@ npm run preview
 
 ```
 src/
-├── components/       # Reusable UI components
-├── constants/        # Application constants and data
+├── components/         # Reusable UI components
+├── constants/         # Application constants and data
 ├── css/              # Global styles
 ├── CTA/              # CTA-specific components
 ├── layout/           # Layout components
@@ -106,4 +106,4 @@ src/
 
 ## License
 
-This project is licensed under the MIT License
+This project is licensed under the MIT License - see the LICENSE file for details

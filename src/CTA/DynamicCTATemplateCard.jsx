@@ -133,10 +133,7 @@ export const DynamicCTATemplateCard = ({
         return "h5";
     }
   };
-
-  const { id } = {
-    id: ctaId,
-  };
+  console.log("titletitle", title);
 
   const TitleTag = getTitleTag();
   const [showConsentModal, setShowConsentModal] = useState(false);
@@ -181,6 +178,7 @@ export const DynamicCTATemplateCard = ({
   const cardBgIsHexColor = cardbgcolor?.startsWith("#");
   const cardBgStyle = cardBgIsHexColor ? { backgroundColor: cardbgcolor } : {};
   const cardBgClass = cardBgIsHexColor ? "" : `bg-${cardbgcolor}`;
+
   console.log("cardBgIsHexColor", cardBgClass);
 
   const postForm = async (userInput) => {
@@ -219,9 +217,10 @@ export const DynamicCTATemplateCard = ({
         }}
         className={`${isHover ? "hover" : ""} `}
         style={utils(
-          `d-flex ${tagPosition === "center"
-            ? "justify-content-center"
-            : tagPosition === "right"
+          `d-flex ${
+            tagPosition === "center"
+              ? "justify-content-center"
+              : tagPosition === "right"
               ? "justify-content-end"
               : "justify-content-start"
           }`
@@ -372,13 +371,14 @@ export const DynamicCTATemplateCard = ({
         }}
         style={{
           ...utils(
-            `d-flex gap-2 ${atBottom ? "" : "flex-grow-1"} flex-wrap ${button.length == 1
-              ? button[0].position === "center"
-                ? "justify-content-center"
-                : button[0].position === "right"
+            `d-flex gap-2 ${atBottom ? "" : "flex-grow-1"} flex-wrap ${
+              button.length == 1
+                ? button[0].position === "center"
+                  ? "justify-content-center"
+                  : button[0].position === "right"
                   ? "justify-content-end"
                   : ""
-              : ""
+                : ""
             }`
           ),
         }}
@@ -390,7 +390,11 @@ export const DynamicCTATemplateCard = ({
             ? btn.variation
             : "";
           const buttonStyle = btn.variation?.startsWith("#")
-            ? { backgroundColor: btn.variation, color: btn.btnTextColor, border: "none" }
+            ? {
+                backgroundColor: btn.variation,
+                color: btn.btnTextColor,
+                border: "none",
+              }
             : {};
           // const buttonClassWraper = (btn.buttonClassWraper?.startsWith('w-') || btn.buttonClassWraper?.startsWith('btn-')) ? btn.buttonClassWraper : '';
 
@@ -399,7 +403,7 @@ export const DynamicCTATemplateCard = ({
 
           const buttonUrl =
             typeof btn?.action === "string" &&
-              btn?.action === "internal_redirect"
+            btn?.action === "internal_redirect"
               ? btn?.url.split(",")
               : btn?.url;
 
@@ -576,7 +580,8 @@ export const DynamicCTATemplateCard = ({
         <div
           style={{
             ...utils(
-              `d-flex justify-content-between align-items-center gap-3 ${isTopLeft ? "" : "flex-row-reverse"
+              `d-flex justify-content-between align-items-center gap-3 ${
+                isTopLeft ? "" : "flex-row-reverse"
               }`
             ),
           }}
@@ -622,7 +627,8 @@ export const DynamicCTATemplateCard = ({
       <div
         style={{
           ...utils(
-            `d-flex p-3 pt-2 justify-content-between align-items-center gap-3 ${isBottomLeft ? "" : "flex-row-reverse"
+            `d-flex p-3 pt-2 justify-content-between align-items-center gap-3 ${
+              isBottomLeft ? "" : "flex-row-reverse"
             }`
           ),
         }}
@@ -630,7 +636,8 @@ export const DynamicCTATemplateCard = ({
         <div
           style={{
             ...utils(
-              `d-flex ${isBottomLeft ? "justify-content-start" : "justify-content-end"
+              `d-flex ${
+                isBottomLeft ? "justify-content-start" : "justify-content-end"
               }`
             ),
           }}
@@ -662,8 +669,9 @@ export const DynamicCTATemplateCard = ({
     <div style={{ ...utils("position-relative") }}>
       <div
         style={{
-          ...utils(`${cardbgImage ? "position-relative" : ""
-            } ${cardbgopacity} ${border} 
+          ...utils(`${
+            cardbgImage ? "position-relative" : ""
+          } ${cardbgopacity} ${border} 
           ${borderColor} ${borderOpacity} ${borderWidth} ${cardExtraClass} ${cardTextClass} 
            ${borderRadius}`),
           backgroundImage: cardbgImage,
@@ -691,14 +699,14 @@ export const DynamicCTATemplateCard = ({
         setActiveMenu("cardStyle");
       }}
       style={{
-        ...utils(`overflow-hidden position-relative ${cardbgImage ? "position-relative" : ""
-          } 
+        ...utils(`overflow-hidden position-relative ${
+          cardbgImage ? "position-relative" : ""
+        } 
     ${border} ${borderColor} ${borderOpacity} ${borderWidth} 
-    ${cardExtraClass} ${cardTextClass}  ${borderRadius} ${cardBgClass}`),
-        backgroundColor: cardBgStyle,
+    ${cardExtraClass} ${cardTextClass} ${borderRadius} ${cardBgClass}`),
+        ...cardBgStyle,
         ...cardTextStyle,
       }}
-      
       className={`${isHover ? "hover" : ""}`}
     >
       {cardbgImage && (
